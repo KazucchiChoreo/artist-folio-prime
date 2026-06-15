@@ -22,7 +22,12 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
-      - run: cp dist/client/index.html dist/client/404.html]
+      - run: |
+          node -e "
+          const fs = require('fs');
+          const files = fs.readdirSync('dist/client');
+          console.log('dist/client contents:', files);
+          "
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
