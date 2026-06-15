@@ -1,26 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const assetsDir = 'dist/client/assets';
 const files = fs.readdirSync(assetsDir);
 
 const css = files.find(f => f.endsWith('.css'));
+const js = files.filter(f => f.endsWith('.js'))
+  .sort((a, b) => fs.statSync(path.join(assetsDir, b)).size - fs.statSync(path.join(assetsDir, a)).size)[0];
 
-// index-*.js の中でstart またはentryを含むもの、なければ最大サイズ
-const jsFiles = files.filter(f => f.endsWith('.js'));
-const jsWithSize = jsFiles.map(f => ({
-  name: f,
-  size: fs.statSync(path.join(assetsDir, f)).size
-})).sort((a, b) => b.size - a.size);
-
-// 全JSファイルをログ出力
-jsWithSize.forEach(f => console.log(f.size, f.name));
-
-// index-rV6... (5KB) ではなく、それ以外のindex-で始まる最大ファイルを選ぶ
-const mainJs = jsWithSize[0].name;
-
-console.log('Selected CSS:', css);
-console.log('Selected JS:', mainJs);
+console.log('CSS:', css);
+console.log('JS:', js);
 
 const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -32,7 +21,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" src="./assets/${mainJs}"></script>
+  <script type="module" src="./assets/${js}"></script>
 </body>
 </html>`;
 
