@@ -8,32 +8,23 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
-    const init = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!mounted) return;
-      setUser(data.user ?? null);
-      if (data.user) {
+    // onAuthStateChange だけで管理する（getUser との競合を避ける）
+    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const u = session?.user ?? null;
+      setUser(u);
+      if (u) {
         const { data: rd } = await supabase
           .from("user_roles")
           .select("role")
-          .eq("user_id", data.user.id);
-        if (mounted) setIsAdmin(!!rd?.some((r) => r.role === "admin"));
-      }
-      if (mounted) setLoading(false);
-    };
-    init();
-    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setUser(session?.user ?? null);
-      if (event === "SIGNED_OUT" || !session?.user) {
+          .eq("user_id", u.id);
+        setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+      } else {
         setIsAdmin(false);
-        return;
       }
-      const { data: rd } = await supabase.from("user_roles").select("role").eq("user_id", session.user.id);
-      setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+      setLoading(false);
     });
+
     return () => {
-      mounted = false;
       sub.subscription.unsubscribe();
     };
   }, []);
