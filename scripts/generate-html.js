@@ -1,13 +1,31 @@
 import fs from 'fs';
-import path from 'path';
 
-// サーバー側のマニフェストからクライアントエントリーポイントを読む
-const manifestPath = 'dist/server/assets';
-const manifestFile = fs.readdirSync(manifestPath).find(f => f.startsWith('_tanstack-start-manifest'));
-const manifest = JSON.parse(fs.readFileSync(path.join(manifestPath, manifestFile), 'utf-8').match(/\{.*\}/s)?.[0] ?? '{}');
+const assetsDir = 'dist/server/assets';
+const manifestFile = fs.readdirSync(assetsDir).find(f => f.startsWith('_tanstack-start-manifest'));
+const raw = fs.readFileSync(`${assetsDir}/${manifestFile}`, 'utf-8');
 
-console.log('Manifest:', JSON.stringify(manifest, null, 2));
+// JSオブジェクトリテラルとして評価
+const manifest = eval('(' + raw.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '') + ')');
+const entryScript = manifest.routes.__root__.scripts[0].attrs.src;
 
-// client側のファイル一覧も出力
-const clientAssets = fs.readdirSync('dist/client/assets');
-console.log('Client assets:', clientAssets);
+const css = fs.readdirSync('dist/client/assets').find(f => f.endsWith('.css'));
+
+const html = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAZUTCHI — Dancer & Choreographer</title>
+  <link rel="modulepreload" href="${entryScript}" />
+  <link rel="stylesheet" href="/assets/${css}" />
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" async src="${entryScript}"></script>
+</body>
+</html>`;
+
+fs.writeFileSync('dist/client/index.html', html);
+fs.copyFileSync('dist/client/index.html', 'dist/client/404.html');
+console.log('Entry:', entryScript);
+console.log('Done!');
