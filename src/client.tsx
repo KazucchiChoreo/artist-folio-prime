@@ -1,7 +1,10 @@
-import { StartClient } from "@tanstack/react-start";
+import { createRouter } from "@tanstack/react-router";
+import { StartClient } from "@tanstack/react-start/client";
 import { hydrateRoot } from "react-dom/client";
-import { getRouter } from "./router";
+import { routeTree } from "./routeTree.gen";
+import { QueryClient } from "@tanstack/react-query";
 
-const router = getRouter();
+const queryClient = new QueryClient();
+const router = createRouter({ routeTree, context: { queryClient } });
 
 hydrateRoot(document, <StartClient router={router} />);
