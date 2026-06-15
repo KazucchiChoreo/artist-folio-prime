@@ -1,26 +1,17 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
 
-const assetsDir = 'dist/client/assets';
-const files = fs.readdirSync(assetsDir);
+const clientAssets = fs.readdirSync('dist/client/assets');
+const css = clientAssets.find(f => f.endsWith('.css'));
 
-const css = files.find(f => f.endsWith('.css'));
+// client-BiriCxZt.js がTanStack Startのクライアントエントリー
+const clientEntry = clientAssets.find(f => f.startsWith('client-') && f.endsWith('.js'));
+// なければ最大サイズのindex-*.js
+const fallback = clientAssets
+  .filter(f => f.endsWith('.js'))
+  .sort((a, b) => fs.statSync(`dist/client/assets/${b}`).size - fs.statSync(`dist/client/assets/${a}`).size)[0];
 
-// index-*.js の中でstart またはentryを含むもの、なければ最大サイズ
-const jsFiles = files.filter(f => f.endsWith('.js'));
-const jsWithSize = jsFiles.map(f => ({
-  name: f,
-  size: fs.statSync(path.join(assetsDir, f)).size
-})).sort((a, b) => b.size - a.size);
-
-// 全JSファイルをログ出力
-jsWithSize.forEach(f => console.log(f.size, f.name));
-
-// index-rV6... (5KB) ではなく、それ以外のindex-で始まる最大ファイルを選ぶ
-const mainJs = jsWithSize[0].name;
-
-console.log('Selected CSS:', css);
-console.log('Selected JS:', mainJs);
+const js = clientEntry || fallback;
+console.log('CSS:', css, 'JS:', js);
 
 const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -28,11 +19,11 @@ const html = `<!DOCTYPE html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KAZUTCHI — Dancer & Choreographer</title>
-  <link rel="stylesheet" href="./assets/${css}" />
+  <link rel="stylesheet" href="/assets/${css}" />
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" src="./assets/${mainJs}"></script>
+  <script type="module" src="/assets/${js}"></script>
 </body>
 </html>`;
 
