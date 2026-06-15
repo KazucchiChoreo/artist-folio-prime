@@ -56,7 +56,7 @@ export function Header() {
               {STRINGS.menu.admin[lang]}
             </Link>
           )}
-          {!user && !loading && (
+          {!user && (
             <Link
               to="/auth"
               className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
