@@ -105,12 +105,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
       <head>
         <HeadContent />
+        {/* GitHub Pages SPA redirect */}
+        <script dangerouslySetInnerHTML={{ __html:
+          `const p=new URLSearchParams(location.search).get('p');if(p)history.replaceState(null,'',p);`
+        }} />
       </head>
       <body>
         {children}
