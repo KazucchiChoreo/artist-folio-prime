@@ -203,6 +203,54 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          budget: string | null
+          created_at: string
+          email: string
+          emailed_at: string | null
+          event_date: string | null
+          id: string
+          inquiry_type: Database["public"]["Enums"]["inquiry_type"]
+          lang: string | null
+          message: string
+          name: string
+          organization: string | null
+          phone: string | null
+          subject: string | null
+        }
+        Insert: {
+          budget?: string | null
+          created_at?: string
+          email: string
+          emailed_at?: string | null
+          event_date?: string | null
+          id?: string
+          inquiry_type: Database["public"]["Enums"]["inquiry_type"]
+          lang?: string | null
+          message: string
+          name: string
+          organization?: string | null
+          phone?: string | null
+          subject?: string | null
+        }
+        Update: {
+          budget?: string | null
+          created_at?: string
+          email?: string
+          emailed_at?: string | null
+          event_date?: string | null
+          id?: string
+          inquiry_type?: Database["public"]["Enums"]["inquiry_type"]
+          lang?: string | null
+          message?: string
+          name?: string
+          organization?: string | null
+          phone?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
       news: {
         Row: {
           body_en: string
@@ -365,6 +413,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      inquiry_type: "choreography" | "appearance" | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -493,6 +542,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      inquiry_type: ["choreography", "appearance", "other"],
     },
   },
 } as const
