@@ -19,43 +19,52 @@ export type Database = {
           created_at: string
           description_en: string | null
           description_ja: string | null
+          description_zh: string | null
           event_date: string | null
           id: string
           image_url: string | null
           link_url: string | null
           title_en: string
           title_ja: string
+          title_zh: string | null
           updated_at: string
           venue_en: string | null
           venue_ja: string | null
+          venue_zh: string | null
         }
         Insert: {
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           event_date?: string | null
           id?: string
           image_url?: string | null
           link_url?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
           venue_en?: string | null
           venue_ja?: string | null
+          venue_zh?: string | null
         }
         Update: {
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           event_date?: string | null
           id?: string
           image_url?: string | null
           link_url?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
           venue_en?: string | null
           venue_ja?: string | null
+          venue_zh?: string | null
         }
         Relationships: []
       }
@@ -63,27 +72,33 @@ export type Database = {
         Row: {
           body_en: string
           body_ja: string
+          body_zh: string | null
           id: string
           name_en: string
           name_ja: string
+          name_zh: string | null
           portrait_url: string | null
           updated_at: string
         }
         Insert: {
           body_en?: string
           body_ja?: string
+          body_zh?: string | null
           id?: string
           name_en?: string
           name_ja?: string
+          name_zh?: string | null
           portrait_url?: string | null
           updated_at?: string
         }
         Update: {
           body_en?: string
           body_ja?: string
+          body_zh?: string | null
           id?: string
           name_en?: string
           name_ja?: string
+          name_zh?: string | null
           portrait_url?: string | null
           updated_at?: string
         }
@@ -93,13 +108,16 @@ export type Database = {
         Row: {
           client_en: string | null
           client_ja: string | null
+          client_zh: string | null
           created_at: string
           description_en: string | null
           description_ja: string | null
+          description_zh: string | null
           id: string
           image_url: string | null
           title_en: string
           title_ja: string
+          title_zh: string | null
           updated_at: string
           video_url: string | null
           year: number | null
@@ -107,13 +125,16 @@ export type Database = {
         Insert: {
           client_en?: string | null
           client_ja?: string | null
+          client_zh?: string | null
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
           video_url?: string | null
           year?: number | null
@@ -121,13 +142,16 @@ export type Database = {
         Update: {
           client_en?: string | null
           client_ja?: string | null
+          client_zh?: string | null
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
           video_url?: string | null
           year?: number | null
@@ -141,8 +165,10 @@ export type Database = {
           instagram: string | null
           management_en: string | null
           management_ja: string | null
+          management_zh: string | null
           note_en: string | null
           note_ja: string | null
+          note_zh: string | null
           twitter: string | null
           updated_at: string
           youtube: string | null
@@ -153,8 +179,10 @@ export type Database = {
           instagram?: string | null
           management_en?: string | null
           management_ja?: string | null
+          management_zh?: string | null
           note_en?: string | null
           note_ja?: string | null
+          note_zh?: string | null
           twitter?: string | null
           updated_at?: string
           youtube?: string | null
@@ -165,8 +193,10 @@ export type Database = {
           instagram?: string | null
           management_en?: string | null
           management_ja?: string | null
+          management_zh?: string | null
           note_en?: string | null
           note_ja?: string | null
+          note_zh?: string | null
           twitter?: string | null
           updated_at?: string
           youtube?: string | null
@@ -177,34 +207,40 @@ export type Database = {
         Row: {
           body_en: string
           body_ja: string
+          body_zh: string | null
           created_at: string
           id: string
           image_url: string | null
           published_at: string
           title_en: string
           title_ja: string
+          title_zh: string | null
           updated_at: string
         }
         Insert: {
           body_en?: string
           body_ja?: string
+          body_zh?: string | null
           created_at?: string
           id?: string
           image_url?: string | null
           published_at?: string
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
         }
         Update: {
           body_en?: string
           body_ja?: string
+          body_zh?: string | null
           created_at?: string
           id?: string
           image_url?: string | null
           published_at?: string
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -215,13 +251,16 @@ export type Database = {
           created_at: string
           description_en: string | null
           description_ja: string | null
+          description_zh: string | null
           format_en: string | null
           format_ja: string | null
+          format_zh: string | null
           id: string
           link_url: string | null
           release_date: string | null
           title_en: string
           title_ja: string
+          title_zh: string | null
           updated_at: string
         }
         Insert: {
@@ -229,13 +268,16 @@ export type Database = {
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           format_en?: string | null
           format_ja?: string | null
+          format_zh?: string | null
           id?: string
           link_url?: string | null
           release_date?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
         }
         Update: {
@@ -243,13 +285,16 @@ export type Database = {
           created_at?: string
           description_en?: string | null
           description_ja?: string | null
+          description_zh?: string | null
           format_en?: string | null
           format_ja?: string | null
+          format_zh?: string | null
           id?: string
           link_url?: string | null
           release_date?: string | null
           title_en?: string
           title_ja?: string
+          title_zh?: string | null
           updated_at?: string
         }
         Relationships: []
