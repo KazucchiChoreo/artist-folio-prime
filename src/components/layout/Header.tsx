@@ -21,6 +21,7 @@ const LANGS: { code: Lang; label: string }[] = [
 export function Header() {
   const { lang, setLang } = useLang();
   const { isAdmin, user, loading } = useAuth();
+  console.log('auth state:', { user, loading, isAdmin });
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
