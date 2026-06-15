@@ -7,9 +7,9 @@ import { STRINGS, useLang, t, pick } from "@/lib/i18n";
 export const Route = createFileRoute("/choreography")({
   head: () => ({
     meta: [
-      { title: "Choreography — KAZUTCHI" },
-      { name: "description", content: "Selected choreography works." },
-      { property: "og:title", content: "Choreography — KAZUTCHI" },
+      { title: "Record — KAZUTCHI" },
+      { name: "description", content: "Selected works and activities." },
+      { property: "og:title", content: "Record — KAZUTCHI" },
     ],
   }),
   component: ChoreographyPage,
@@ -27,7 +27,7 @@ function ChoreographyPage() {
 
   return (
     <>
-      <PageHeader eyebrow="— 03 / CHOREOGRAPHY" title={t(STRINGS.menu.choreography, lang)} />
+      <PageHeader eyebrow="— 02 / RECORD" title={t(STRINGS.menu.choreography, lang)} />
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           {!data || data.length === 0 ? (

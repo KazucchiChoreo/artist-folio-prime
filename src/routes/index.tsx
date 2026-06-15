@@ -22,11 +22,9 @@ export const Route = createFileRoute("/")({
 
 const MENU = [
   { to: "/news", key: "news" as const, num: "01" },
-  { to: "/appearances", key: "appearances" as const, num: "02" },
-  { to: "/choreography", key: "choreography" as const, num: "03" },
-  { to: "/biography", key: "biography" as const, num: "04" },
-  { to: "/record", key: "record" as const, num: "05" },
-  { to: "/contact", key: "contact" as const, num: "06" },
+  { to: "/choreography", key: "choreography" as const, num: "02" },
+  { to: "/biography", key: "biography" as const, num: "03" },
+  { to: "/contact", key: "contact" as const, num: "04" },
 ];
 
 const FALLBACK = [hero1, hero2, hero3];

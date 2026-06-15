@@ -49,9 +49,9 @@ export const STRINGS = {
   menu: {
     news: { ja: "ニュース", en: "NEWS", zh: "新闻" },
     appearances: { ja: "出演情報", en: "APPEARANCES", zh: "演出" },
-    choreography: { ja: "振付作品", en: "CHOREOGRAPHY", zh: "编舞作品" },
+    choreography: { ja: "活動実績", en: "RECORD", zh: "活动记录" },
     biography: { ja: "プロフィール", en: "BIOGRAPHY", zh: "个人简介" },
-    record: { ja: "リリース", en: "RECORD", zh: "作品记录" },
+    record: { ja: "リリース", en: "RELEASES", zh: "作品记录" },
     contact: { ja: "お問い合わせ", en: "CONTACT", zh: "联系" },
     login: { ja: "ログイン", en: "LOGIN", zh: "登录" },
     admin: { ja: "管理画面", en: "ADMIN", zh: "管理" },
