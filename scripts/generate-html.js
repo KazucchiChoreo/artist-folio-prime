@@ -1,30 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-const assetsDir = 'dist/client/assets';
-const files = fs.readdirSync(assetsDir);
+// サーバー側のマニフェストからクライアントエントリーポイントを読む
+const manifestPath = 'dist/server/assets';
+const manifestFile = fs.readdirSync(manifestPath).find(f => f.startsWith('_tanstack-start-manifest'));
+const manifest = JSON.parse(fs.readFileSync(path.join(manifestPath, manifestFile), 'utf-8').match(/\{.*\}/s)?.[0] ?? '{}');
 
-const css = files.find(f => f.endsWith('.css'));
-const js = files.filter(f => f.endsWith('.js'))
-  .sort((a, b) => fs.statSync(path.join(assetsDir, b)).size - fs.statSync(path.join(assetsDir, a)).size)[0];
+console.log('Manifest:', JSON.stringify(manifest, null, 2));
 
-console.log('CSS:', css);
-console.log('JS:', js);
-
-const html = `<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KAZUTCHI — Dancer & Choreographer</title>
-  <link rel="stylesheet" href="./assets/${css}" />
-</head>
-<body>
-  <div id="root"></div>
-  <script type="module" src="./assets/${js}"></script>
-</body>
-</html>`;
-
-fs.writeFileSync('dist/client/index.html', html);
-fs.copyFileSync('dist/client/index.html', 'dist/client/404.html');
-console.log('Done!');
+// client側のファイル一覧も出力
+const clientAssets = fs.readdirSync('dist/client/assets');
+console.log('Client assets:', clientAssets);
