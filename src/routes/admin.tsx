@@ -76,10 +76,8 @@ function AdminPage() {
 
         {tab === "slideshow" && <SlideshowAdmin />}
         {tab === "news" && <NewsAdmin />}
-        {tab === "appearances" && <AppearancesAdmin />}
         {tab === "choreography" && <ChoreographyAdmin />}
         {tab === "biography" && <BiographyAdmin />}
-        {tab === "records" && <RecordsAdmin />}
         {tab === "contact" && <ContactAdmin />}
       </div>
     </div>
