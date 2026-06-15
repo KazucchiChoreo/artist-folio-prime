@@ -2,8 +2,7 @@
 <html>
 <head>
   <script>
-    const path = window.location.pathname + window.location.search;
-    window.location.replace('/?p=' + encodeURIComponent(path));
+    window.location.replace('/?p=' + encodeURIComponent(location.pathname + location.search));
   </script>
 </head>
 </html>
