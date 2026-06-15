@@ -2,7 +2,8 @@
 <html>
 <head>
   <script>
-    window.location.replace('/?p=' + encodeURIComponent(location.pathname + location.search));
+    var seg = window.location.pathname.replace('/artist-folio-prime', '');
+    window.location.replace('/artist-folio-prime/?p=' + encodeURIComponent(seg + window.location.search));
   </script>
 </head>
 </html>
