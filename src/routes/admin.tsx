@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
-type Tab = "slideshow" | "news" | "appearances" | "choreography" | "biography" | "records" | "contact";
+type Tab = "slideshow" | "news" | "choreography" | "biography" | "contact";
 
 function AdminPage() {
   const { user, isAdmin, loading } = useAuth();
@@ -42,10 +42,8 @@ function AdminPage() {
   const tabs: { key: Tab; label: string }[] = [
     { key: "slideshow", label: "Slideshow" },
     { key: "news", label: "News" },
-    { key: "appearances", label: "Appearances" },
-    { key: "choreography", label: "Choreography" },
+    { key: "choreography", label: "Record" },
     { key: "biography", label: "Biography" },
-    { key: "records", label: "Records" },
     { key: "contact", label: "Contact" },
   ];
 
