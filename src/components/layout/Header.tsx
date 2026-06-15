@@ -20,7 +20,7 @@ const LANGS: { code: Lang; label: string }[] = [
 
 export function Header() {
   const { lang, setLang } = useLang();
-  const { isAdmin, user } = useAuth();
+  const { isAdmin, user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
@@ -56,7 +56,7 @@ export function Header() {
               {STRINGS.menu.admin[lang]}
             </Link>
           )}
-          {!user && (
+          {!loading && !user && (
             <Link
               to="/auth"
               className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
@@ -107,7 +107,7 @@ export function Header() {
                 {STRINGS.menu.admin[lang]}
               </Link>
             )}
-            {!user && (
+            {!loading && !user && (
               <Link to="/auth" onClick={() => setOpen(false)} className="text-sm tracking-display text-muted-foreground">
                 {STRINGS.menu.login[lang]}
               </Link>
