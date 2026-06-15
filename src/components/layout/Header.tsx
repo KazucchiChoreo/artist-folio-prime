@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { STRINGS, useLang } from "@/lib/i18n";
+import { STRINGS, useLang, type Lang } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,12 @@ const NAV = [
   { to: "/biography", key: "biography" as const },
   { to: "/record", key: "record" as const },
   { to: "/contact", key: "contact" as const },
+];
+
+const LANGS: { code: Lang; label: string }[] = [
+  { code: "ja", label: "JP" },
+  { code: "en", label: "EN" },
+  { code: "zh", label: "中" },
 ];
 
 export function Header() {
@@ -25,12 +31,12 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-colors duration-300",
-        isHome ? "bg-transparent" : "bg-background/80 backdrop-blur-md border-b hairline",
+        isHome ? "bg-background/40 backdrop-blur-sm" : "bg-background/85 backdrop-blur-md border-b hairline",
       )}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between">
-        <Link to="/" className="font-display text-xl tracking-[0.4em] text-foreground">
-          ARTIST
+        <Link to="/" className="font-display text-2xl tracking-[0.18em] text-foreground">
+          KAZUTCHI
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -38,8 +44,8 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className="text-[11px] tracking-display text-muted-foreground hover:text-gold transition-colors"
-              activeProps={{ className: "text-gold" }}
+              className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
+              activeProps={{ className: "text-coral" }}
             >
               {STRINGS.menu[item.key][lang]}
             </Link>
@@ -47,7 +53,7 @@ export function Header() {
           {isAdmin && (
             <Link
               to="/admin"
-              className="text-[11px] tracking-display text-gold hover:opacity-80"
+              className="text-[11px] tracking-display text-coral hover:opacity-80"
             >
               {STRINGS.menu.admin[lang]}
             </Link>
@@ -55,25 +61,23 @@ export function Header() {
           {!user && (
             <Link
               to="/auth"
-              className="text-[11px] tracking-display text-muted-foreground hover:text-gold transition-colors"
+              className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
             >
               {STRINGS.menu.login[lang]}
             </Link>
           )}
           <div className="flex items-center gap-1 text-[11px] tracking-display border-l hairline pl-5">
-            <button
-              onClick={() => setLang("ja")}
-              className={cn("px-1 transition-colors", lang === "ja" ? "text-gold" : "text-muted-foreground hover:text-foreground")}
-            >
-              JP
-            </button>
-            <span className="text-muted-foreground/40">/</span>
-            <button
-              onClick={() => setLang("en")}
-              className={cn("px-1 transition-colors", lang === "en" ? "text-gold" : "text-muted-foreground hover:text-foreground")}
-            >
-              EN
-            </button>
+            {LANGS.map((l, i) => (
+              <span key={l.code} className="flex items-center">
+                {i > 0 && <span className="text-muted-foreground/40 mx-1">/</span>}
+                <button
+                  onClick={() => setLang(l.code)}
+                  className={cn("px-1 transition-colors", lang === l.code ? "text-coral" : "text-muted-foreground hover:text-foreground")}
+                >
+                  {l.label}
+                </button>
+              </span>
+            ))}
           </div>
         </nav>
 
@@ -94,14 +98,14 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
-                className="text-sm tracking-display text-muted-foreground hover:text-gold"
-                activeProps={{ className: "text-gold" }}
+                className="text-sm tracking-display text-muted-foreground hover:text-coral"
+                activeProps={{ className: "text-coral" }}
               >
                 {STRINGS.menu[item.key][lang]}
               </Link>
             ))}
             {isAdmin && (
-              <Link to="/admin" onClick={() => setOpen(false)} className="text-sm tracking-display text-gold">
+              <Link to="/admin" onClick={() => setOpen(false)} className="text-sm tracking-display text-coral">
                 {STRINGS.menu.admin[lang]}
               </Link>
             )}
@@ -111,9 +115,14 @@ export function Header() {
               </Link>
             )}
             <div className="flex items-center gap-2 pt-2 border-t hairline text-xs tracking-display">
-              <button onClick={() => setLang("ja")} className={lang === "ja" ? "text-gold" : "text-muted-foreground"}>JP</button>
-              <span className="text-muted-foreground/40">/</span>
-              <button onClick={() => setLang("en")} className={lang === "en" ? "text-gold" : "text-muted-foreground"}>EN</button>
+              {LANGS.map((l, i) => (
+                <span key={l.code} className="flex items-center">
+                  {i > 0 && <span className="text-muted-foreground/40 mx-1">/</span>}
+                  <button onClick={() => setLang(l.code)} className={lang === l.code ? "text-coral" : "text-muted-foreground"}>
+                    {l.label}
+                  </button>
+                </span>
+              ))}
             </div>
           </nav>
         </div>

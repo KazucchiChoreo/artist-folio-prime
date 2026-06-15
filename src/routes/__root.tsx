@@ -82,10 +82,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ARTIST — Dancer & Choreographer" },
-      { name: "description", content: "Official site of ARTIST — dancer and choreographer. News, appearances, choreography, biography, releases, and contact." },
-      { property: "og:title", content: "ARTIST — Dancer & Choreographer" },
-      { property: "og:description", content: "Official site of ARTIST — dancer and choreographer." },
+      { title: "KAZUTCHI — Dancer & Choreographer" },
+      { name: "description", content: "Official site of Kazutchi — pro dancer & choreographer specializing in jazz, pop, and idol-group formation dance." },
+      { property: "og:title", content: "KAZUTCHI — Dancer & Choreographer" },
+      { property: "og:description", content: "Pro dancer & choreographer. Jazz, pop, idol-group formation dance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -95,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap",
       },
     ],
   }),
@@ -108,7 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja" className="dark">
+    <html lang="ja">
       <head>
         <HeadContent />
       </head>
@@ -133,7 +133,7 @@ function RootComponent() {
           </main>
           <Footer />
         </div>
-        <Toaster theme="dark" />
+        <Toaster theme="light" richColors />
       </I18nProvider>
     </QueryClientProvider>
   );
