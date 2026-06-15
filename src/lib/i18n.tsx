@@ -48,14 +48,15 @@ export const STRINGS = {
   brand: { ja: "KAZUTCHI", en: "KAZUTCHI", zh: "KAZUTCHI" },
   menu: {
     news: { ja: "ニュース", en: "NEWS", zh: "新闻" },
-    appearances: { ja: "出演情報", en: "APPEARANCES", zh: "演出" },
     choreography: { ja: "活動実績", en: "RECORD", zh: "活动记录" },
     biography: { ja: "プロフィール", en: "BIOGRAPHY", zh: "个人简介" },
-    record: { ja: "リリース", en: "RELEASES", zh: "作品记录" },
     contact: { ja: "お問い合わせ", en: "CONTACT", zh: "联系" },
     login: { ja: "ログイン", en: "LOGIN", zh: "登录" },
     admin: { ja: "管理画面", en: "ADMIN", zh: "管理" },
     logout: { ja: "ログアウト", en: "LOGOUT", zh: "登出" },
+    // 以下は残しておく（他で使う可能性があるため）
+    appearances: { ja: "出演情報", en: "APPEARANCES", zh: "演出" },
+    record: { ja: "リリース", en: "RELEASES", zh: "作品记录" },
   },
   explore: { ja: "詳しく見る", en: "EXPLORE", zh: "查看详情" },
   noContent: { ja: "まだコンテンツがありません。", en: "No content yet.", zh: "暂无内容。" },
