@@ -22,6 +22,7 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - run: ls dist || echo "dist not found"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
