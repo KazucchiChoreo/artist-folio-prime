@@ -244,9 +244,12 @@ function NewsAdmin() {
             <Field label="DATE" type="date" value={r.published_at ?? ""} onChange={(e) => set({ published_at: e.target.value })} />
             <Field label="TITLE (JA)" value={r.title_ja ?? ""} onChange={(e) => set({ title_ja: e.target.value })} />
             <Field label="TITLE (EN)" value={r.title_en ?? ""} onChange={(e) => set({ title_en: e.target.value })} />
+            <Field label="TITLE (ZH)" value={r.title_zh ?? ""} onChange={(e) => set({ title_zh: e.target.value })} />
             <Area label="BODY (JA)" value={r.body_ja ?? ""} onChange={(e) => set({ body_ja: e.target.value })} />
             <Area label="BODY (EN)" value={r.body_en ?? ""} onChange={(e) => set({ body_en: e.target.value })} />
+            <Area label="BODY (ZH)" value={r.body_zh ?? ""} onChange={(e) => set({ body_zh: e.target.value })} />
             <ImageUploader value={r.image_url} onChange={(url) => set({ image_url: url })} folder="news" />
+
           </>
         )}
       />
@@ -285,12 +288,16 @@ function AppearancesAdmin() {
         <Field label="DATE" type="date" value={r.event_date ?? ""} onChange={(e) => set({ event_date: e.target.value || null })} />
         <Field label="TITLE (JA)" value={r.title_ja ?? ""} onChange={(e) => set({ title_ja: e.target.value })} />
         <Field label="TITLE (EN)" value={r.title_en ?? ""} onChange={(e) => set({ title_en: e.target.value })} />
+        <Field label="TITLE (ZH)" value={r.title_zh ?? ""} onChange={(e) => set({ title_zh: e.target.value })} />
         <Field label="VENUE (JA)" value={r.venue_ja ?? ""} onChange={(e) => set({ venue_ja: e.target.value })} />
         <Field label="VENUE (EN)" value={r.venue_en ?? ""} onChange={(e) => set({ venue_en: e.target.value })} />
+        <Field label="VENUE (ZH)" value={r.venue_zh ?? ""} onChange={(e) => set({ venue_zh: e.target.value })} />
         <Area label="DESCRIPTION (JA)" value={r.description_ja ?? ""} onChange={(e) => set({ description_ja: e.target.value })} />
         <Area label="DESCRIPTION (EN)" value={r.description_en ?? ""} onChange={(e) => set({ description_en: e.target.value })} />
+        <Area label="DESCRIPTION (ZH)" value={r.description_zh ?? ""} onChange={(e) => set({ description_zh: e.target.value })} />
         <Field label="LINK URL" value={r.link_url ?? ""} onChange={(e) => set({ link_url: e.target.value })} />
         <ImageUploader value={r.image_url} onChange={(url) => set({ image_url: url })} folder="appearances" />
+
       </>
     )} />
   );
@@ -323,12 +330,16 @@ function ChoreographyAdmin() {
         <Field label="YEAR" type="number" value={r.year ?? ""} onChange={(e) => set({ year: e.target.value === "" ? null : Number(e.target.value) })} />
         <Field label="TITLE (JA)" value={r.title_ja ?? ""} onChange={(e) => set({ title_ja: e.target.value })} />
         <Field label="TITLE (EN)" value={r.title_en ?? ""} onChange={(e) => set({ title_en: e.target.value })} />
+        <Field label="TITLE (ZH)" value={r.title_zh ?? ""} onChange={(e) => set({ title_zh: e.target.value })} />
         <Field label="CLIENT (JA)" value={r.client_ja ?? ""} onChange={(e) => set({ client_ja: e.target.value })} />
         <Field label="CLIENT (EN)" value={r.client_en ?? ""} onChange={(e) => set({ client_en: e.target.value })} />
+        <Field label="CLIENT (ZH)" value={r.client_zh ?? ""} onChange={(e) => set({ client_zh: e.target.value })} />
         <Area label="DESCRIPTION (JA)" value={r.description_ja ?? ""} onChange={(e) => set({ description_ja: e.target.value })} />
         <Area label="DESCRIPTION (EN)" value={r.description_en ?? ""} onChange={(e) => set({ description_en: e.target.value })} />
+        <Area label="DESCRIPTION (ZH)" value={r.description_zh ?? ""} onChange={(e) => set({ description_zh: e.target.value })} />
         <Field label="VIDEO URL" value={r.video_url ?? ""} onChange={(e) => set({ video_url: e.target.value })} />
         <ImageUploader value={r.image_url} onChange={(url) => set({ image_url: url })} folder="choreography" />
+
       </>
     )} />
   );
@@ -364,10 +375,13 @@ function BiographyAdmin() {
     <div className="space-y-5 max-w-2xl">
       <Field label="NAME (JA)" value={row.name_ja ?? ""} onChange={(e) => set({ name_ja: e.target.value })} />
       <Field label="NAME (EN)" value={row.name_en ?? ""} onChange={(e) => set({ name_en: e.target.value })} />
+      <Field label="NAME (ZH)" value={row.name_zh ?? ""} onChange={(e) => set({ name_zh: e.target.value })} />
       <Area label="BIO (JA)" value={row.body_ja ?? ""} onChange={(e) => set({ body_ja: e.target.value })} />
       <Area label="BIO (EN)" value={row.body_en ?? ""} onChange={(e) => set({ body_en: e.target.value })} />
+      <Area label="BIO (ZH)" value={row.body_zh ?? ""} onChange={(e) => set({ body_zh: e.target.value })} />
       <ImageUploader value={row.portrait_url} onChange={(url) => set({ portrait_url: url })} folder="bio" />
-      <button onClick={save} className="bg-gold text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
+      <button onClick={save} className="bg-coral text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
+
     </div>
   );
 }
@@ -393,12 +407,16 @@ function RecordsAdmin() {
         <Field label="RELEASE DATE" type="date" value={r.release_date ?? ""} onChange={(e) => set({ release_date: e.target.value || null })} />
         <Field label="TITLE (JA)" value={r.title_ja ?? ""} onChange={(e) => set({ title_ja: e.target.value })} />
         <Field label="TITLE (EN)" value={r.title_en ?? ""} onChange={(e) => set({ title_en: e.target.value })} />
+        <Field label="TITLE (ZH)" value={r.title_zh ?? ""} onChange={(e) => set({ title_zh: e.target.value })} />
         <Field label="FORMAT (JA)" value={r.format_ja ?? ""} onChange={(e) => set({ format_ja: e.target.value })} placeholder="EP / Single / Album" />
         <Field label="FORMAT (EN)" value={r.format_en ?? ""} onChange={(e) => set({ format_en: e.target.value })} />
+        <Field label="FORMAT (ZH)" value={r.format_zh ?? ""} onChange={(e) => set({ format_zh: e.target.value })} />
         <Area label="DESCRIPTION (JA)" value={r.description_ja ?? ""} onChange={(e) => set({ description_ja: e.target.value })} />
         <Area label="DESCRIPTION (EN)" value={r.description_en ?? ""} onChange={(e) => set({ description_en: e.target.value })} />
+        <Area label="DESCRIPTION (ZH)" value={r.description_zh ?? ""} onChange={(e) => set({ description_zh: e.target.value })} />
         <Field label="LINK URL" value={r.link_url ?? ""} onChange={(e) => set({ link_url: e.target.value })} />
         <ImageUploader value={r.cover_url} onChange={(url) => set({ cover_url: url })} folder="records" />
+
       </>
     )} />
   );
@@ -433,12 +451,15 @@ function ContactAdmin() {
       <Field label="EMAIL" value={row.email ?? ""} onChange={(e) => set({ email: e.target.value })} />
       <Area label="MANAGEMENT (JA)" value={row.management_ja ?? ""} onChange={(e) => set({ management_ja: e.target.value })} />
       <Area label="MANAGEMENT (EN)" value={row.management_en ?? ""} onChange={(e) => set({ management_en: e.target.value })} />
+      <Area label="MANAGEMENT (ZH)" value={row.management_zh ?? ""} onChange={(e) => set({ management_zh: e.target.value })} />
       <Field label="INSTAGRAM URL" value={row.instagram ?? ""} onChange={(e) => set({ instagram: e.target.value })} />
       <Field label="TWITTER URL" value={row.twitter ?? ""} onChange={(e) => set({ twitter: e.target.value })} />
       <Field label="YOUTUBE URL" value={row.youtube ?? ""} onChange={(e) => set({ youtube: e.target.value })} />
       <Area label="NOTE (JA)" value={row.note_ja ?? ""} onChange={(e) => set({ note_ja: e.target.value })} />
       <Area label="NOTE (EN)" value={row.note_en ?? ""} onChange={(e) => set({ note_en: e.target.value })} />
-      <button onClick={save} className="bg-gold text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
+      <Area label="NOTE (ZH)" value={row.note_zh ?? ""} onChange={(e) => set({ note_zh: e.target.value })} />
+      <button onClick={save} className="bg-coral text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
+
     </div>
   );
 }
