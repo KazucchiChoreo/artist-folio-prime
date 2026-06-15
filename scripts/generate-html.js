@@ -1,14 +1,17 @@
 import fs from 'fs';
 
-const assetsDir = 'dist/server/assets';
-const manifestFile = fs.readdirSync(assetsDir).find(f => f.startsWith('_tanstack-start-manifest'));
-const raw = fs.readFileSync(`${assetsDir}/${manifestFile}`, 'utf-8');
+const clientAssets = fs.readdirSync('dist/client/assets');
+const css = clientAssets.find(f => f.endsWith('.css'));
 
-// JSオブジェクトリテラルとして評価
-const manifest = eval('(' + raw.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '') + ')');
-const entryScript = manifest.routes.__root__.scripts[0].attrs.src;
+// client-BiriCxZt.js がTanStack Startのクライアントエントリー
+const clientEntry = clientAssets.find(f => f.startsWith('client-') && f.endsWith('.js'));
+// なければ最大サイズのindex-*.js
+const fallback = clientAssets
+  .filter(f => f.endsWith('.js'))
+  .sort((a, b) => fs.statSync(`dist/client/assets/${b}`).size - fs.statSync(`dist/client/assets/${a}`).size)[0];
 
-const css = fs.readdirSync('dist/client/assets').find(f => f.endsWith('.css'));
+const js = clientEntry || fallback;
+console.log('CSS:', css, 'JS:', js);
 
 const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -16,16 +19,14 @@ const html = `<!DOCTYPE html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KAZUTCHI — Dancer & Choreographer</title>
-  <link rel="modulepreload" href="${entryScript}" />
   <link rel="stylesheet" href="/assets/${css}" />
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" async src="${entryScript}"></script>
+  <script type="module" src="/assets/${js}"></script>
 </body>
 </html>`;
 
 fs.writeFileSync('dist/client/index.html', html);
 fs.copyFileSync('dist/client/index.html', 'dist/client/404.html');
-console.log('Entry:', entryScript);
 console.log('Done!');
