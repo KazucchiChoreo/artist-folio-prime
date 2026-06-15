@@ -22,14 +22,28 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
-      - run: |
-          node -e "
-          const fs = require('fs');
-          const files = fs.readdirSync('dist/client');
-          console.log('dist/client contents:', files);
-          "
+      - name: Create index.html
+        run: |
+          CSS=$(ls dist/client/assets/*.css | xargs -I{} basename {})
+          JS=$(ls dist/client/assets/index-*.js | tail -1 | xargs -I{} basename {})
+          cat > dist/client/index.html << EOF
+          <!DOCTYPE html>
+          <html lang="ja">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>KAZUTCHI — Dancer & Choreographer</title>
+            <base href="/artist-folio-prime/" />
+            <link rel="stylesheet" href="/artist-folio-prime/assets/$CSS" />
+          </head>
+          <body>
+            <div id="root"></div>
+            <script type="module" src="/artist-folio-prime/assets/$JS"></script>
+          </body>
+          </html>
+          EOF
+          cp dist/client/index.html dist/client/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
       - uses: actions/deploy-pages@v4
-        id: deployment
