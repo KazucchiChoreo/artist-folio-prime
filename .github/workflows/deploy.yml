@@ -25,7 +25,7 @@ jobs:
       - name: Create index.html
         run: |
           CSS=$(ls dist/client/assets/*.css | head -1 | xargs basename)
-          MAINJS=$(ls dist/client/assets/index-*.js | awk '{print length, $0}' | sort -rn | head -1 | awk '{print $2}' | xargs basename)
+          MAINJS=$(ls -S dist/client/assets/index-*.js | head -1 | xargs basename)
           echo "CSS: $CSS"
           echo "JS: $MAINJS"
           cat > dist/client/index.html << HTMLEOF
