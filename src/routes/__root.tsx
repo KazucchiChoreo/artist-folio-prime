@@ -112,7 +112,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
         {/* GitHub Pages SPA redirect */}
         <script dangerouslySetInnerHTML={{ __html:
-          `const p=new URLSearchParams(location.search).get('p');if(p)history.replaceState(null,'',p);`
+          `const p=new URLSearchParams(location.search).get('p');if(p)history.replaceState(null,'','/artist-folio-prime'+p);`
         }} />
       </head>
       <body>
