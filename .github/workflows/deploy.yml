@@ -22,6 +22,8 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - name: List all JS files
+        run: ls -lS dist/client/assets/*.js
       - name: Create index.html
         run: |
           CSS=$(ls dist/client/assets/*.css | head -1 | xargs basename)
