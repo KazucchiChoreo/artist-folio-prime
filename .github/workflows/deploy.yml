@@ -24,9 +24,11 @@ jobs:
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
       - name: Create index.html
         run: |
-          CSS=$(ls dist/client/assets/*.css | xargs -I{} basename {})
-          JS=$(ls dist/client/assets/index-*.js | tail -1 | xargs -I{} basename {})
-          cat > dist/client/index.html << EOF
+          CSS=$(ls dist/client/assets/*.css | head -1 | xargs basename)
+          MAINJS=$(ls dist/client/assets/index-*.js | awk '{print length, $0}' | sort -rn | head -1 | awk '{print $2}' | xargs basename)
+          echo "CSS: $CSS"
+          echo "JS: $MAINJS"
+          cat > dist/client/index.html << HTMLEOF
           <!DOCTYPE html>
           <html lang="ja">
           <head>
@@ -34,14 +36,15 @@ jobs:
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <title>KAZUTCHI — Dancer & Choreographer</title>
             <base href="/artist-folio-prime/" />
-            <link rel="stylesheet" href="/artist-folio-prime/assets/$CSS" />
+            <link rel="stylesheet" href="./assets/$CSS" />
           </head>
           <body>
             <div id="root"></div>
-            <script type="module" src="/artist-folio-prime/assets/$JS"></script>
+            <script type="module" src="./assets/$MAINJS"></script>
           </body>
           </html>
-          EOF
+          HTMLEOF
+          cat dist/client/index.html
           cp dist/client/index.html dist/client/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
