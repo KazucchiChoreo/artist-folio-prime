@@ -14,16 +14,312 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appearances: {
+        Row: {
+          created_at: string
+          description_en: string | null
+          description_ja: string | null
+          event_date: string | null
+          id: string
+          image_url: string | null
+          link_url: string | null
+          title_en: string
+          title_ja: string
+          updated_at: string
+          venue_en: string | null
+          venue_ja: string | null
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          event_date?: string | null
+          id?: string
+          image_url?: string | null
+          link_url?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+          venue_en?: string | null
+          venue_ja?: string | null
+        }
+        Update: {
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          event_date?: string | null
+          id?: string
+          image_url?: string | null
+          link_url?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+          venue_en?: string | null
+          venue_ja?: string | null
+        }
+        Relationships: []
+      }
+      biography: {
+        Row: {
+          body_en: string
+          body_ja: string
+          id: string
+          name_en: string
+          name_ja: string
+          portrait_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          body_en?: string
+          body_ja?: string
+          id?: string
+          name_en?: string
+          name_ja?: string
+          portrait_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body_en?: string
+          body_ja?: string
+          id?: string
+          name_en?: string
+          name_ja?: string
+          portrait_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      choreography: {
+        Row: {
+          client_en: string | null
+          client_ja: string | null
+          created_at: string
+          description_en: string | null
+          description_ja: string | null
+          id: string
+          image_url: string | null
+          title_en: string
+          title_ja: string
+          updated_at: string
+          video_url: string | null
+          year: number | null
+        }
+        Insert: {
+          client_en?: string | null
+          client_ja?: string | null
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          id?: string
+          image_url?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+          video_url?: string | null
+          year?: number | null
+        }
+        Update: {
+          client_en?: string | null
+          client_ja?: string | null
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          id?: string
+          image_url?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+          video_url?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      contact_info: {
+        Row: {
+          email: string | null
+          id: string
+          instagram: string | null
+          management_en: string | null
+          management_ja: string | null
+          note_en: string | null
+          note_ja: string | null
+          twitter: string | null
+          updated_at: string
+          youtube: string | null
+        }
+        Insert: {
+          email?: string | null
+          id?: string
+          instagram?: string | null
+          management_en?: string | null
+          management_ja?: string | null
+          note_en?: string | null
+          note_ja?: string | null
+          twitter?: string | null
+          updated_at?: string
+          youtube?: string | null
+        }
+        Update: {
+          email?: string | null
+          id?: string
+          instagram?: string | null
+          management_en?: string | null
+          management_ja?: string | null
+          note_en?: string | null
+          note_ja?: string | null
+          twitter?: string | null
+          updated_at?: string
+          youtube?: string | null
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          body_en: string
+          body_ja: string
+          created_at: string
+          id: string
+          image_url: string | null
+          published_at: string
+          title_en: string
+          title_ja: string
+          updated_at: string
+        }
+        Insert: {
+          body_en?: string
+          body_ja?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+        }
+        Update: {
+          body_en?: string
+          body_ja?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      records: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          description_en: string | null
+          description_ja: string | null
+          format_en: string | null
+          format_ja: string | null
+          id: string
+          link_url: string | null
+          release_date: string | null
+          title_en: string
+          title_ja: string
+          updated_at: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          format_en?: string | null
+          format_ja?: string | null
+          id?: string
+          link_url?: string | null
+          release_date?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          description_en?: string | null
+          description_ja?: string | null
+          format_en?: string | null
+          format_ja?: string | null
+          id?: string
+          link_url?: string | null
+          release_date?: string | null
+          title_en?: string
+          title_ja?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      slideshow_images: {
+        Row: {
+          caption_en: string | null
+          caption_ja: string | null
+          created_at: string
+          id: string
+          image_url: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          caption_en?: string | null
+          caption_ja?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          caption_en?: string | null
+          caption_ja?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +446,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
