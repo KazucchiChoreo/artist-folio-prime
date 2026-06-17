@@ -9,21 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RecordRouteImport } from './routes/record'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChoreographyRouteImport } from './routes/choreography'
 import { Route as BiographyRouteImport } from './routes/biography'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AppearancesRouteImport } from './routes/appearances'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
-const RecordRoute = RecordRouteImport.update({
-  id: '/record',
-  path: '/record',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
@@ -49,11 +42,6 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppearancesRoute = AppearancesRouteImport.update({
-  id: '/appearances',
-  path: '/appearances',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -68,94 +56,73 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/appearances': typeof AppearancesRoute
   '/auth': typeof AuthRoute
   '/biography': typeof BiographyRoute
   '/choreography': typeof ChoreographyRoute
   '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
-  '/record': typeof RecordRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/appearances': typeof AppearancesRoute
   '/auth': typeof AuthRoute
   '/biography': typeof BiographyRoute
   '/choreography': typeof ChoreographyRoute
   '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
-  '/record': typeof RecordRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/appearances': typeof AppearancesRoute
   '/auth': typeof AuthRoute
   '/biography': typeof BiographyRoute
   '/choreography': typeof ChoreographyRoute
   '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
-  '/record': typeof RecordRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin'
-    | '/appearances'
     | '/auth'
     | '/biography'
     | '/choreography'
     | '/contact'
     | '/news'
-    | '/record'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
-    | '/appearances'
     | '/auth'
     | '/biography'
     | '/choreography'
     | '/contact'
     | '/news'
-    | '/record'
   id:
     | '__root__'
     | '/'
     | '/admin'
-    | '/appearances'
     | '/auth'
     | '/biography'
     | '/choreography'
     | '/contact'
     | '/news'
-    | '/record'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  AppearancesRoute: typeof AppearancesRoute
   AuthRoute: typeof AuthRoute
   BiographyRoute: typeof BiographyRoute
   ChoreographyRoute: typeof ChoreographyRoute
   ContactRoute: typeof ContactRoute
   NewsRoute: typeof NewsRoute
-  RecordRoute: typeof RecordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/record': {
-      id: '/record'
-      path: '/record'
-      fullPath: '/record'
-      preLoaderRoute: typeof RecordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/news': {
       id: '/news'
       path: '/news'
@@ -191,13 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/appearances': {
-      id: '/appearances'
-      path: '/appearances'
-      fullPath: '/appearances'
-      preLoaderRoute: typeof AppearancesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -218,13 +178,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  AppearancesRoute: AppearancesRoute,
   AuthRoute: AuthRoute,
   BiographyRoute: BiographyRoute,
   ChoreographyRoute: ChoreographyRoute,
   ContactRoute: ContactRoute,
   NewsRoute: NewsRoute,
-  RecordRoute: RecordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
