@@ -9,7 +9,7 @@ export function useAuth() {
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('onAuthStateChange fired:', event, session?.user?.id);
+      console.log("onAuthStateChange fired:", event, session?.user?.id);
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
@@ -18,16 +18,16 @@ export function useAuth() {
             .from("user_roles")
             .select("role")
             .eq("user_id", u.id);
-          console.log('user_roles query result:', { rd, error });
+          console.log("user_roles query result:", { rd, error });
           setIsAdmin(!!rd?.some((r) => r.role === "admin"));
         } catch (err) {
-          console.error('user_roles query threw:', err);
+          console.error("user_roles query threw:", err);
         }
       } else {
         setIsAdmin(false);
       }
       setLoading(false);
-      console.log('setLoading(false) called');
+      console.log("setLoading(false) called");
     });
 
     return () => {
