@@ -8,20 +8,26 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // onAuthStateChange だけで管理する（getUser との競合を避ける）
     const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('onAuthStateChange fired:', event, session?.user?.id);
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        const { data: rd } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", u.id);
-        setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+        try {
+          const { data: rd, error } = await supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", u.id);
+          console.log('user_roles query result:', { rd, error });
+          setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+        } catch (err) {
+          console.error('user_roles query threw:', err);
+        }
       } else {
         setIsAdmin(false);
       }
       setLoading(false);
+      console.log('setLoading(false) called');
     });
 
     return () => {
