@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/PageHeader";
 import { useLang, pick } from "@/lib/i18n";
-import portrait from "@/assets/portrait.jpg";
 
 export const Route = createFileRoute("/biography")({
   head: () => ({
@@ -32,7 +31,7 @@ function BiographyPage() {
     },
   });
 
-  const img = data?.portrait_url || portrait;
+  const img = data?.portrait_url || null;
   const name = pick(data, "name", lang) || "Kazutchi";
   const body = pick(data, "body", lang);
 
@@ -42,7 +41,7 @@ function BiographyPage() {
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20">
           <div className="aspect-[4/5] overflow-hidden bg-card rounded-md shadow-sm">
-            <img src={img} alt={name} className="h-full w-full object-cover" />
+          {img && <img src={img} alt={name} className="h-full w-full object-cover" />}
           </div>
           <div>
             <p className="text-[11px] tracking-display text-coral mb-3">PROFILE</p>
