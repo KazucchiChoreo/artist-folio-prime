@@ -6,25 +6,33 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [adminChecked, setAdminChecked] = useState(false);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       const u = session?.user ?? null;
       setUser(u);
-      if (u) {
-        try {
-          const { data: rd } = await supabase
-            .from("user_roles")
-            .select("role")
-            .eq("user_id", u.id);
-          setIsAdmin(!!rd?.some((r) => r.role === "admin"));
-        } catch {
-          setIsAdmin(false);
-        }
-      } else {
-        setIsAdmin(false);
-      }
       setLoading(false);
+
+      if (!u) {
+        setIsAdmin(false);
+        setAdminChecked(true);
+        return;
+      }
+
+      setAdminChecked(false);
+      supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", u.id)
+        .then(({ data: rd }) => {
+          setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+          setAdminChecked(true);
+        })
+        .catch(() => {
+          setIsAdmin(false);
+          setAdminChecked(true);
+        });
     });
 
     return () => {
@@ -32,5 +40,5 @@ export function useAuth() {
     };
   }, []);
 
-  return { user, isAdmin, loading };
+  return { user, isAdmin, loading, adminChecked };
 }
