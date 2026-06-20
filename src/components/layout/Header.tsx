@@ -1,3 +1,4 @@
+import { supabase } from "@/integrations/supabase/client";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -57,6 +58,16 @@ export function Header() {
               {STRINGS.menu.admin[lang]}
             </Link>
           )}
+          {!loading && user && (
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+              }}
+              className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
+            >
+              {STRINGS.menu.logout[lang]}
+            </button>
+          )}
           {!loading && !user && (
             <Link
               to="/auth"
@@ -107,6 +118,17 @@ export function Header() {
               <Link to="/admin" onClick={() => setOpen(false)} className="text-sm tracking-display text-coral">
                 {STRINGS.menu.admin[lang]}
               </Link>
+            )}
+            {!loading && user && (
+              <button
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  setOpen(false);
+                }}
+                className="text-sm tracking-display text-muted-foreground text-left"
+              >
+                {STRINGS.menu.logout[lang]}
+              </button>
             )}
             {!loading && !user && (
               <Link to="/auth" onClick={() => setOpen(false)} className="text-sm tracking-display text-muted-foreground">
