@@ -11,6 +11,10 @@ import { I18nProvider } from "../lib/i18n";
 import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
 import "../styles.css";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
+import { AuthPageContent } from "./auth";
 
 function NotFoundComponent() {
   return (
@@ -82,15 +86,52 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <div className="min-h-screen bg-background text-foreground flex flex-col">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
+        <SiteGate />
         <Toaster theme="light" richColors />
       </I18nProvider>
     </QueryClientProvider>
+  );
+}
+
+function LockedNotice() {
+  return <AuthPageContent />;
+}
+
+function SiteGate() {
+  const { isAdmin, loading: authLoading, adminChecked } = useAuth();
+  const { data: settings, isLoading: settingsLoading } = useQuery({
+    queryKey: ["site-settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").limit(1).maybeSingle();
+      return data;
+    },
+  });
+
+  if (authLoading || !adminChecked || settingsLoading) {
+    return <div className="min-h-screen bg-background" />;
+  }
+
+  const isPublic = settings?.is_public ?? true;
+
+  if (!isPublic && !isAdmin) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <LockedNotice />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }
