@@ -365,6 +365,33 @@ export type Database = {
         }
         Relationships: []
       }
+      site_text: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string
+          value_en: string | null
+          value_ja: string | null
+          value_zh: string | null
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string
+          value_en?: string | null
+          value_ja?: string | null
+          value_zh?: string | null
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string
+          value_en?: string | null
+          value_ja?: string | null
+          value_zh?: string | null
+        }
+        Relationships: []
+      }
       slideshow_images: {
         Row: {
           caption_en: string | null
