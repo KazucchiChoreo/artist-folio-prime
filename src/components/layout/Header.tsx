@@ -1,9 +1,9 @@
-import { supabase } from "@/integrations/supabase/client";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { STRINGS, useLang, type Lang } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -22,10 +22,16 @@ const LANGS: { code: Lang; label: string }[] = [
 export function Header() {
   const { lang, setLang } = useLang();
   const { isAdmin, user, loading } = useAuth();
-  console.log('auth state:', { user, loading, isAdmin });
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setOpen(false);
+    navigate({ to: "/" });
+  };
 
   return (
     <header
@@ -58,16 +64,6 @@ export function Header() {
               {STRINGS.menu.admin[lang]}
             </Link>
           )}
-          {!loading && user && (
-            <button
-              onClick={async () => {
-                await supabase.auth.signOut();
-              }}
-              className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
-            >
-              {STRINGS.menu.logout[lang]}
-            </button>
-          )}
           {!loading && !user && (
             <Link
               to="/auth"
@@ -75,6 +71,14 @@ export function Header() {
             >
               {STRINGS.menu.login[lang]}
             </Link>
+          )}
+          {!loading && user && (
+            <button
+              onClick={handleLogout}
+              className="text-[11px] tracking-display text-muted-foreground hover:text-coral transition-colors"
+            >
+              {STRINGS.menu.logout[lang]}
+            </button>
           )}
           <div className="flex items-center gap-1 text-[11px] tracking-display border-l hairline pl-5">
             {LANGS.map((l, i) => (
@@ -119,21 +123,15 @@ export function Header() {
                 {STRINGS.menu.admin[lang]}
               </Link>
             )}
-            {!loading && user && (
-              <button
-                onClick={async () => {
-                  await supabase.auth.signOut();
-                  setOpen(false);
-                }}
-                className="text-sm tracking-display text-muted-foreground text-left"
-              >
-                {STRINGS.menu.logout[lang]}
-              </button>
-            )}
             {!loading && !user && (
               <Link to="/auth" onClick={() => setOpen(false)} className="text-sm tracking-display text-muted-foreground">
                 {STRINGS.menu.login[lang]}
               </Link>
+            )}
+            {!loading && user && (
+              <button onClick={handleLogout} className="text-sm tracking-display text-muted-foreground text-left">
+                {STRINGS.menu.logout[lang]}
+              </button>
             )}
             <div className="flex items-center gap-2 pt-2 border-t hairline text-xs tracking-display">
               {LANGS.map((l, i) => (
