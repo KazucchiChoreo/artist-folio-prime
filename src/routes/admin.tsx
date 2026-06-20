@@ -16,21 +16,21 @@ export const Route = createFileRoute("/admin")({
 type Tab = "slideshow" | "news" | "choreography" | "biography" | "contact";
 
 function AdminPage() {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAdmin, loading, adminChecked } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("slideshow");
   const { lang } = useLang();
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || !adminChecked) return;
     if (!user) navigate({ to: "/auth" });
     else if (!isAdmin) {
       toast.error(lang === "ja" ? "管理者権限がありません" : "Not an admin");
       navigate({ to: "/" });
     }
-  }, [loading, user, isAdmin, navigate, lang]);
+  }, [loading, adminChecked, user, isAdmin, navigate, lang]);
 
-  if (loading || !user || !isAdmin) {
+  if (loading || !adminChecked || !user || !isAdmin) {
     return <div className="pt-32 px-6 text-muted-foreground">Loading…</div>;
   }
   if (!isAdmin) {
