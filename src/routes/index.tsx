@@ -4,9 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Slideshow } from "@/components/Slideshow";
 import { STRINGS, useLang, t, pick } from "@/lib/i18n";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,8 +23,6 @@ const MENU = [
   { to: "/biography", key: "biography" as const, num: "03" },
   { to: "/contact", key: "contact" as const, num: "04" },
 ];
-
-const FALLBACK = [hero1, hero2, hero3];
 
 function Home() {
   const { lang } = useLang();
@@ -61,8 +56,8 @@ function Home() {
     },
   });
 
-  const images = slides && slides.length > 0 ? slides.map((s) => s.image_url) : FALLBACK;
-
+  const images = slides?.map((s) => s.image_url) ?? [];
+  
   const { data: latestNews } = useQuery({
     queryKey: ["latest-news"],
     queryFn: async () => {
