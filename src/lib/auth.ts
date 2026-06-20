@@ -25,12 +25,12 @@ export function useAuth() {
         .from("user_roles")
         .select("role")
         .eq("user_id", u.id)
-        .then(({ data: rd }) => {
-          setIsAdmin(!!rd?.some((r) => r.role === "admin"));
-          setAdminChecked(true);
-        })
-        .catch(() => {
-          setIsAdmin(false);
+        .then(({ data: rd, error }) => {
+          if (error) {
+            setIsAdmin(false);
+          } else {
+            setIsAdmin(!!rd?.some((r) => r.role === "admin"));
+          }
           setAdminChecked(true);
         });
     });
