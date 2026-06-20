@@ -19,30 +19,18 @@ function AdminPage() {
   const { user, isAdmin, loading } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("slideshow");
-  const { lang } = useLan
-    
-  const [roleChecked, setRoleChecked] = useState(false);
+  const { lang } = useLang();
 
   useEffect(() => {
     if (loading) return;
-    if (!user) {
-      navigate({ to: "/auth" });
-      return;
-    }
-    // isAdmin の判定がまだ追いついていない可能性があるので、少し待つ
-    const timer = setTimeout(() => setRoleChecked(true), 1500);
-    return () => clearTimeout(timer);
-  }, [loading, user, navigate]);
-  
-  useEffect(() => {
-    if (!roleChecked) return;
-    if (!isAdmin) {
+    if (!user) navigate({ to: "/auth" });
+    else if (!isAdmin) {
       toast.error(lang === "ja" ? "管理者権限がありません" : "Not an admin");
       navigate({ to: "/" });
     }
-  }, [roleChecked, isAdmin, navigate, lang]);
-  
-  if (loading || !user || (!isAdmin && !roleChecked)) {
+  }, [loading, user, isAdmin, navigate, lang]);
+
+  if (loading || !user || !isAdmin) {
     return <div className="pt-32 px-6 text-muted-foreground">Loading…</div>;
   }
   if (!isAdmin) {
