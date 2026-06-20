@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
-type Tab = "slideshow" | "news" | "choreography" | "biography" | "contact" | "settings";
+type Tab = "slideshow" | "hometext" | "news" | "choreography" | "biography" | "contact" | "settings";
 
 function AdminPage() {
   const { user, isAdmin, loading, adminChecked } = useAuth();
@@ -48,6 +48,7 @@ function AdminPage() {
   
   const tabs: { key: Tab; label: string }[] = [
     { key: "slideshow", label: "Slideshow" },
+    { key: "hometext", label: "Home Text" },
     { key: "news", label: "News" },
     { key: "choreography", label: "Record" },
     { key: "biography", label: "Biography" },
@@ -83,6 +84,7 @@ function AdminPage() {
         </div>
 
         {tab === "slideshow" && <SlideshowAdmin />}
+        {tab === "hometext" && <HomeTextAdmin />}
         {tab === "news" && <NewsAdmin />}
         {tab === "choreography" && <ChoreographyAdmin />}
         {tab === "biography" && <BiographyAdmin />}
@@ -197,6 +199,68 @@ function SlideshowAdmin() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ============ HOME TEXT ============ */
+const HOME_TEXT_KEYS = [
+  { key: "home.role", label: "ROLE / TAGLINE" },
+  { key: "home.hero_title", label: "HERO TITLE (改行は \\n で)" },
+  { key: "home.hero_lead", label: "HERO LEAD TEXT" },
+];
+
+function HomeTextAdmin() {
+  const qc = useQueryClient();
+  const { data, refetch } = useQuery({
+    queryKey: ["admin-site-text"],
+    queryFn: async () => (await supabase.from("site_text").select("*")).data ?? [],
+  });
+  const [rows, setRows] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    if (data) {
+      const map: Record<string, any> = {};
+      data.forEach((r: any) => { map[r.key] = r; });
+      setRows(map);
+    }
+  }, [data]);
+
+  const set = (key: string, patch: any) => {
+    setRows((prev) => ({ ...prev, [key]: { ...prev[key], ...patch } }));
+  };
+
+  const save = async (key: string) => {
+    const row = rows[key];
+    const payload = {
+      key,
+      value_ja: row.value_ja ?? "",
+      value_en: row.value_en ?? "",
+      value_zh: row.value_zh ?? "",
+    };
+    const { error } = await supabase.from("site_text").upsert(payload, { onConflict: "key" });
+    if (error) return toast.error(error.message);
+    toast.success("Saved");
+    refetch();
+    qc.invalidateQueries({ queryKey: ["site-text"] });
+  };
+
+  return (
+    <div className="max-w-2xl space-y-10">
+      {HOME_TEXT_KEYS.map(({ key, label }) => {
+        const row = rows[key] ?? {};
+        return (
+          <div key={key} className="border hairline p-6 space-y-4">
+            <p className="text-[11px] tracking-display text-gold">{label}</p>
+            <Area label="JA" value={row.value_ja ?? ""} onChange={(e) => set(key, { value_ja: e.target.value })} />
+            <Area label="EN" value={row.value_en ?? ""} onChange={(e) => set(key, { value_en: e.target.value })} />
+            <Area label="ZH" value={row.value_zh ?? ""} onChange={(e) => set(key, { value_zh: e.target.value })} />
+            <button onClick={() => save(key)} className="bg-coral text-primary-foreground px-6 py-3 text-xs tracking-display">
+              SAVE
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
