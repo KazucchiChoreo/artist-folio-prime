@@ -60,7 +60,7 @@ function AuthPage() {
         <div className="mx-auto max-w-md px-6 lg:px-10">
           <p className="text-sm text-muted-foreground mb-8">
             {lang === "ja"
-              ? "管理者用のログインです。最初に登録したアカウントが管理者になります。"
+              ? "会員の方はこちらからログイン"
               : "Admin login. The first registered account becomes the administrator."}
           </p>
           <form onSubmit={onSubmit} className="space-y-5">
