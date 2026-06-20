@@ -61,7 +61,7 @@ function AuthPage() {
           <p className="text-sm text-muted-foreground mb-8">
             {lang === "ja"
               ? "会員の方はこちらからログイン"
-              : "Admin login. The first registered account becomes the administrator."}
+              : "login"}
           </p>
           <form onSubmit={onSubmit} className="space-y-5">
             <div>
