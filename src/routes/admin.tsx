@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
-type Tab = "slideshow" | "news" | "choreography" | "biography" | "contact";
+type Tab = "slideshow" | "news" | "choreography" | "biography" | "contact" | "settings";
 
 function AdminPage() {
   const { user, isAdmin, loading, adminChecked } = useAuth();
@@ -45,13 +45,14 @@ function AdminPage() {
     await supabase.auth.signOut();
     navigate({ to: "/" });
   };
-
+  
   const tabs: { key: Tab; label: string }[] = [
     { key: "slideshow", label: "Slideshow" },
     { key: "news", label: "News" },
     { key: "choreography", label: "Record" },
     { key: "biography", label: "Biography" },
     { key: "contact", label: "Contact" },
+    { key: "settings", label: "Settings" },
   ];
 
   return (
@@ -86,6 +87,7 @@ function AdminPage() {
         {tab === "choreography" && <ChoreographyAdmin />}
         {tab === "biography" && <BiographyAdmin />}
         {tab === "contact" && <ContactAdmin />}
+        {tab === "settings" && <SiteSettingsAdmin />}
       </div>
     </div>
   );
@@ -459,6 +461,63 @@ function ContactAdmin() {
       <Field label="TWITTER URL" value={row.twitter ?? ""} onChange={(e) => set({ twitter: e.target.value })} />
       <Field label="YOUTUBE URL" value={row.youtube ?? ""} onChange={(e) => set({ youtube: e.target.value })} />
       <button onClick={save} className="bg-coral text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
+    </div>
+  );
+}
+
+/* ============ SITE SETTINGS ============ */
+function SiteSettingsAdmin() {
+  const qc = useQueryClient();
+  const { data, refetch } = useQuery({
+    queryKey: ["admin-site-settings"],
+    queryFn: async () => (await supabase.from("site_settings").select("*").limit(1).maybeSingle()).data,
+  });
+  const [busy, setBusy] = useState(false);
+
+  const toggle = async () => {
+    if (!data) return;
+    setBusy(true);
+    const { error } = await supabase
+      .from("site_settings")
+      .update({ is_public: !data.is_public })
+      .eq("id", data.id);
+    setBusy(false);
+    if (error) return toast.error(error.message);
+    toast.success(data.is_public ? "サイトを非公開にしました" : "サイトを公開しました");
+    refetch();
+    qc.invalidateQueries({ queryKey: ["site-settings"] });
+  };
+
+  if (!data) return <p className="text-muted-foreground">Loading…</p>;
+
+  return (
+    <div className="max-w-2xl space-y-6">
+      <div className="border hairline p-6">
+        <p className="text-[11px] tracking-display text-gold mb-2">SITE VISIBILITY</p>
+        <p className="text-sm text-muted-foreground mb-6">
+          {data.is_public
+            ? "現在サイトは公開中です。誰でも閲覧できます。"
+            : "現在サイトは非公開です。管理者以外にはログイン画面が表示されます。"}
+        </p>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggle}
+            disabled={busy}
+            className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors ${
+              data.is_public ? "bg-coral" : "bg-muted"
+            }`}
+          >
+            <span
+              className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+                data.is_public ? "translate-x-8" : "translate-x-1"
+              }`}
+            />
+          </button>
+          <span className="text-sm font-medium">
+            {data.is_public ? "公開中" : "非公開"}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
