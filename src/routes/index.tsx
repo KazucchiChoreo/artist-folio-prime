@@ -32,6 +32,24 @@ const FALLBACK = [hero1, hero2, hero3];
 function Home() {
   const { lang } = useLang();
 
+  const { data: siteText } = useQuery({
+    queryKey: ["site-text"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_text").select("*");
+      const map: Record<string, { ja: string; en: string; zh: string }> = {};
+      data?.forEach((row: any) => {
+        map[row.key] = { ja: row.value_ja, en: row.value_en, zh: row.value_zh };
+      });
+      return map;
+    },
+  });
+  
+  const getText = (key: string, fallback: { ja: string; en: string; zh: string }) => {
+    const row = siteText?.[key];
+    if (!row) return t(fallback, lang);
+    return t(row, lang);
+  };
+
   const { data: slides } = useQuery({
     queryKey: ["slideshow"],
     queryFn: async () => {
@@ -65,13 +83,13 @@ function Home() {
         <div className="absolute inset-0 z-[5] bg-gradient-to-b from-background/10 via-background/5 to-background/70" />
         <div className="relative z-10 h-full flex flex-col justify-end pb-32 px-6 lg:px-10 max-w-7xl mx-auto">
           <p className="text-[11px] tracking-display text-coral mb-6 animate-fade-in">
-            {t(STRINGS.role, lang)}
+            {getText("home.role", STRINGS.role)}
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-normal text-foreground max-w-4xl animate-fade-in whitespace-pre-line drop-shadow-sm">
-            {t(STRINGS.heroTitle, lang)}
+            {getText("home.hero_title", STRINGS.heroTitle)}
           </h1>
           <p className="mt-6 max-w-xl text-sm md:text-base text-foreground/80 animate-fade-in">
-            {t(STRINGS.heroLead, lang)}
+            {getText("home.hero_lead", STRINGS.heroLead)}
           </p>
         </div>
         <div className="absolute bottom-8 right-6 lg:right-10 z-10 text-[10px] tracking-display text-foreground/60">
