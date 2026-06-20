@@ -442,20 +442,16 @@ function ContactAdmin() {
     toast.success("Saved"); refetch();
     qc.invalidateQueries({ queryKey: ["contact"] });
   };
+
   return (
     <div className="space-y-5 max-w-2xl">
-      <Field label="EMAIL" value={row.email ?? ""} onChange={(e) => set({ email: e.target.value })} />
       <Area label="MANAGEMENT (JA)" value={row.management_ja ?? ""} onChange={(e) => set({ management_ja: e.target.value })} />
       <Area label="MANAGEMENT (EN)" value={row.management_en ?? ""} onChange={(e) => set({ management_en: e.target.value })} />
       <Area label="MANAGEMENT (ZH)" value={row.management_zh ?? ""} onChange={(e) => set({ management_zh: e.target.value })} />
       <Field label="INSTAGRAM URL" value={row.instagram ?? ""} onChange={(e) => set({ instagram: e.target.value })} />
       <Field label="TWITTER URL" value={row.twitter ?? ""} onChange={(e) => set({ twitter: e.target.value })} />
       <Field label="YOUTUBE URL" value={row.youtube ?? ""} onChange={(e) => set({ youtube: e.target.value })} />
-      <Area label="NOTE (JA)" value={row.note_ja ?? ""} onChange={(e) => set({ note_ja: e.target.value })} />
-      <Area label="NOTE (EN)" value={row.note_en ?? ""} onChange={(e) => set({ note_en: e.target.value })} />
-      <Area label="NOTE (ZH)" value={row.note_zh ?? ""} onChange={(e) => set({ note_zh: e.target.value })} />
       <button onClick={save} className="bg-coral text-primary-foreground px-6 py-3 text-xs tracking-display">SAVE</button>
-
     </div>
   );
 }
