@@ -16,7 +16,7 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-function AuthPage() {
+export function AuthPageContent() {
   const { lang } = useLang();
   const navigate = useNavigate();
   const { user, isAdmin, loading } = useAuth();
@@ -104,5 +104,9 @@ function AuthPage() {
         </div>
       </section>
     </>
-  );
+  );  
+}
+
+function AuthPage() {
+  return <AuthPageContent />;
 }
