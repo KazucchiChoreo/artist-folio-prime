@@ -33,7 +33,6 @@ export function Header() {
     navigate({ to: "/" });
   };
   
-  console.log("HEADER RENDER:", { user: !!user, loading, isAdmin });
   return (
     <header
       className={cn(
