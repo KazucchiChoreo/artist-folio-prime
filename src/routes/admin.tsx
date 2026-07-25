@@ -193,8 +193,8 @@ function SlideshowAdmin() {
         {data?.map((s) => (
           <div key={s.id} className="relative group">
             <img src={s.image_url} alt="" className="w-full aspect-video object-cover bg-card" />
-            <button onClick={() => remove(s.id)} className="absolute top-2 right-2 bg-destructive/90 text-destructive-foreground p-2 opacity-0 group-hover:opacity-100 transition">
-              <Trash2 size={14} />
+　　　　　　　　<button onClick={() => remove(s.id)} className="absolute top-2 right-2 bg-destructive/90 text-destructive-foreground p-2 opacity-0 group-hover:opacity-100 transition">
+               <Trash2 size={14} />
             </button>
           </div>
         ))}
