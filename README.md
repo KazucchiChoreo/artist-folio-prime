@@ -119,7 +119,7 @@ https://github.com/KazucchiChoreo/artist-folio-prime
 
 ## 環境変数
 
-`.env`（`.env` は公開して大丈夫な情報のみ。`.env.example` のみ管理）
+`.env`（`.env` はコミットから外す。`.env.example` のみ管理）
 
 ```
 VITE_SUPABASE_URL=https://wkbphwpnkdibhbxnbozj.supabase.co
